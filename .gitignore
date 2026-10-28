@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.coverage
+*.log
+Thumbs.db
+docs/report/rendered/
+_tmp_deps/
+_tmp/

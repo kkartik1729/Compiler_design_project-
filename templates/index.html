@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive recursive-descent syntax analyzer and AST visualizer.">
+  <title>Syntax Analyzer | Compiler Design</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="/" aria-label="Syntax Analyzer home"><span class="brand-mark">{ }</span><span>Compiler Design Lab</span></a><span class="top-tag">LEXER · RECURSIVE DESCENT · AST</span></header>
+  <main class="page-shell">
+    <section class="hero"><div><p class="eyebrow">INTERACTIVE LEARNING TOOL</p><h1>Syntax Analyzer and<br><span>Parse Tree Generator</span></h1><p class="hero-copy">Trace how an expression becomes tokens, follows grammar rules, and forms an abstract syntax tree.</p></div><div class="hero-chip"><span class="pulse"></span> Parser ready</div></section>
+    <section class="workspace">
+      <div class="panel editor-panel">
+        <div class="panel-heading"><div><p class="eyebrow">01 / SOURCE</p><h2>Enter an expression</h2></div><button id="clear-button" class="button button-quiet" type="button">Clear</button></div>
+        <label class="sr-only" for="source-input">Expression to analyze</label>
+        <textarea id="source-input" spellcheck="false" rows="3" placeholder="Try: a + b * c">a + b * c</textarea>
+        <div class="examples"><span>Try an example</span><button type="button" data-example="(a + b) * c">Parentheses</button><button type="button" data-example="x = 10 + 20">Assignment</button><button type="button" data-example="-a + 5">Unary minus</button><button type="button" data-example="a + * b">Syntax error</button></div>
+        <div class="editor-actions"><span class="hint">Enter an arithmetic expression or assignment</span><button id="analyze-button" class="button button-primary" type="button"><span>Analyze expression</span><span aria-hidden="true">→</span></button></div>
+      </div>
+      <div id="status-card" class="status-card status-idle" role="status" aria-live="polite"><span class="status-icon">i</span><span id="status-text">Ready. Analyze an expression to see its tokens and syntax tree.</span></div>
+    </section>
+    <section class="results-grid">
+      <article class="panel result-panel"><div class="panel-heading"><div><p class="eyebrow">02 / LEXICAL ANALYSIS</p><h2>Token stream</h2></div><span class="count-pill" id="token-count">0 tokens</span></div>
+        <div class="table-wrap"><table><thead><tr><th>Token type</th><th>Lexeme</th><th>Position</th></tr></thead><tbody id="token-body"><tr class="empty-row"><td colspan="3">Tokens will appear here after analysis.</td></tr></tbody></table></div>
+      </article>
+      <article class="panel result-panel tree-panel"><div class="panel-heading"><div><p class="eyebrow">03 / SYNTAX ANALYSIS</p><h2>Abstract syntax tree</h2></div><span class="tree-label">AST</span></div>
+        <div id="tree-view" class="tree-view empty-state">Your syntax tree will appear here.</div>
+        <details class="text-tree"><summary>View text representation</summary><pre id="tree-text">No tree generated yet.</pre></details>
+      </article>
+    </section>
+    <section class="lower-grid">
+      <article class="panel code-panel"><div class="panel-heading"><div><p class="eyebrow">04 / OPTIONAL PHASE</p><h2>Three-address code</h2></div><span class="tree-label">IR</span></div><pre id="code-output" class="code-output">Intermediate code will appear after analysis.</pre></article>
+      <article class="panel grammar-panel"><div class="panel-heading"><div><p class="eyebrow">GRAMMAR</p><h2>Expression rules</h2></div></div><pre class="grammar">Program   → Statement EOF
+Statement → IDENTIFIER '=' Expr | Expr
+Expr      → Term (('+' | '-') Term)*
+Term      → Unary (('*' | '/') Unary)*
+Unary     → '-' Unary | Primary
+Primary   → NUMBER | IDENTIFIER | '(' Expr ')'</pre><p class="grammar-note">Multiplication and division bind more tightly because <code>Term</code> is parsed inside <code>Expr</code>. Repetition makes operators left-associative; parentheses override the default grouping.</p></article>
+    </section>
+    <footer><span>Syntax Analyzer and Parse Tree Generator Using Python</span><span>Compiler Design · TEC 2026–2027</span></footer>
+  </main>
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</body>
+</html>
